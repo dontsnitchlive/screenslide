@@ -1,0 +1,86 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+
+    $(document).ready(function () {
+
+        console.log("now starting ready");
+        let content            = [];
+        var canvas            = $('#canvas');
+        var durationImage    = 100000;
+        var srcImage        = '<img src="$" alt="">';
+        var srcVideo        = '<video autoplay><source src="$" type="video/mp4"></source></video>';
+        var current            = -1;
+        var regex        = /(?:\.([^.]+))?$/;
+        
+        function playNext() {
+            ++current;    
+            if (content.length == current) {
+                current    = 0;
+            }
+    
+            var source        = null;
+            var file        = "http://localhost:3000/" +content[current];
+            console.log(file);
+            var extension    = regex.exec(file)[1];
+            
+            if ('jpg' == extension) {
+                source        = srcImage;
+                setTimeout(function() { playNext(); }, durationImage);
+            }
+
+            if ('jpeg' == extension) {
+                source        = srcImage;
+                setTimeout(function() { playNext(); }, durationImage);
+            }
+
+            if ('png' == extension) {
+                source        = srcImage;
+                setTimeout(function() { playNext(); }, durationImage);
+            }
+            
+            if ('mp4' == extension) {
+                source        = srcVideo;
+            }
+            
+            if (null !== source) {
+                source    = source.replace('$', file);
+                canvas.html(source);
+    
+                if ('mp4' == extension) {
+                    canvas.find('video').bind("ended", function() {
+                        playNext();
+                    });
+                }
+            }
+        }
+        $.ajax({
+            url: "http://localhost:3000/data",
+            dataType: 'json'
+        })
+        .done(data =>{
+            console.log("got data. play next");
+            content = data;
+            playNext();
+        });
+        
+    });
+
+
+
+</script>
+
+</head>
+<body>
+
+
+
+    <div id="canvas" class="canvas"></div>
+
+</body>
+
+</html>
