@@ -1,0 +1,28 @@
+- Bilder und Vidos in Ordner "Data" Speichern
+
+- Zeit bei /public/home ändern
+ 
+- Filesystem as now
+
+
+Download Node.js https://nodejs.org/en/
+
+Download PM2 over:
+
+npm install pm2@latest -g
+
+npm install pm2-windows-startup -g
+
+pm2-startup install
+
+Datei laden über pm2 start "directory/bin/www"
+
+pm2 save
+
+Erreichbarkeit über localhost:3000
+
+
+
+Firefox Auto Fullscreen: https://addons.mozilla.org/de/firefox/addon/autofullscreen/
+
+Mozilla Firefox in Aufgabenplanung
